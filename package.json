@@ -1,3 +1,6 @@
+"scripts": {
+  "start": "node server.js"
+},
 {
   "name": "Votaciones",
   "version": "0.0.1",
