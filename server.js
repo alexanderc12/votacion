@@ -13,7 +13,12 @@ app.use(logger('dev'));
 app.use(express.static(path.resolve(__dirname, 'public')));
 app.set('view engine', 'html');
 app.use(favicon(path.join(__dirname, 'public', 'img', 'favicon.ico')));
-mongoose.connect('mongodb://' + process.env.IP + '/votaciones');
+
+if(process.env.OPENSHIFT_MONGODB_DB_URL){
+  mongoose.connect(process.env.OPENSHIFT_MONGODB_DB_URL + votaciones);
+}else{
+    mongoose.connect('mongodb://127.0.0.1:27017/' + votaciones);
+}
 
 nunjucks.configure('views', {
     autoescape: true,
