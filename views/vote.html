@@ -1,0 +1,32 @@
+{% extends "layout.html" %} {% block content %}
+<div class="row" ng-controller="ElectionsController as election">
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4 class="panel-title">Lista de candidatos:</h4></div>
+            <div class="panel-body">
+                <h4>Ingrese su codigo:</h4>
+                    <input type="text" ng-model="election.code"/>
+                <h4>Escoja el candidato por el que quiere votar:</h4>
+                <div class="row">
+                    <ul class="media-list">
+                        {% for candidate in elect.candidateList %}
+                        <li>
+                            <div class="col-sm-6 col-md-4">
+                                <div class="thumbnail">
+                                    {{candidate.photo | safe }}
+                                    <div class="caption">
+                                        <h3> {{candidate.name}} {{candidate.lastName}}</h3>
+                                        <a type="button" class="btn btn-primary btn-lg btn-block" ng-href="https://votaciones-alexanderc121.c9users.io/votar/registrar/?candidato={{candidate._id}}&eleccion={{elect._id}}&code=[[election.code]]">Votar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

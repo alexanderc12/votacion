@@ -1,0 +1,88 @@
+{% extends "layout.html" %} {% block content %}
+<div class="row" ng-controller="ElectionsController as election">
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4 class="panel-title">Lista de candidatos:</h4></div>
+            <div class="panel-body">
+                <h4>Esta lista indica los datos de los canditados:</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <td>Nombre</td>
+                            <td>Apellidos</td>
+                            <td>Foto</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for candidate in elect.candidateList %}
+                        <tr>
+                            <td>{{candidate.name}}</td>
+                            <td>{{candidate.lastName}}</td>
+                            <td>{{candidate.photo | safe }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4 class="panel-title">Lista de votantes:</h4></div>
+            <div class="panel-body">
+                <h4>Esta lista indica los codigos de los votantes:</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <td>Codigo</td>
+                            <td>Estado</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for person in persons %}
+                        <tr>
+                            <td>{{person.code}}</td>
+                            <td>{% if person.state %} <span class="label label-warning">Usado</span> {% else %} <span class="label label-success">Activo</span> {% endif %}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4 class="panel-title">Resultados:</h4></div>
+            <div class="panel-body">
+                <h4>Esta lista indica los codigos de los votantes:</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <td>Nombre</td>
+                            <td>Votos</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for result in resultList %}
+                        <tr>
+                            <td>{{result.name}}</td>
+                            <td>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow={{result.votes}} aria-valuemin="0" aria-valuemax="{{elect.votersNumber}}" style="min-width: 4em;width:{{(100*result.votes)/elect.votersNumber}}%;">
+                                        {{result.votes}} de {{elect.votersNumber}}
+                                    </div>
+                                </div></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

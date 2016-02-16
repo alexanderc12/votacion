@@ -1,0 +1,8 @@
+{% extends "layout.html" %} {% block content %}
+<div class="row" ng-controller="ElectionsController as election">
+    <div class="alert alert-danger" role="alert">
+        Ha ocurrido un error, posiblemente usted ya voto o su codigo no ha sido registrado :(
+        <a href="/" class="alert-link">Volver al inicio</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "layout.html" %} {% block content %}
+<div class="row" ng-controller="ElectionsController as election">
+    <ul class="media-list">
+        <li>
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <h3 style="text-align:center"><strong>Crear elección</strong></h3>
+                    <img src="/img/new.png" class="img-responsive" alt="Crear" style="height: 300px; width: 300px; display: block;">
+                    <h4>Esta opción le permite crear una nueva elección, para ello debe tener claros los siguientes datos:</h4>
+                    <ul>
+                        <li>Nombre</li>
+                        <li>Numero de participantes</li>
+                        <li>Información de los candidatos</li>
+                    </ul>
+                    </br>
+                    <div class="text-center">
+                        <a type="button" class="btn btn-primary btn-lg" href="/nuevaEleccion"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Crear elección</a>
+                    </div>
+                    </br>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <h3 style="text-align:center"><strong>Configurar</strong></h3>
+                    <img src="/img/config.png" class="img-responsive" alt="Crear" style="height: 300px; width: 300px; display: block;">
+                    <div class="form-group" ng-init="election.load();">
+                        <h4>Esta opción le permite ver los detalles de una elección en curso, por favor seleccione en la lista la elección en la que esta interesado:</h4>
+                    </div>
+                    <div class="text-center">
+                        <select class="form-control" name="repeatSelect" id="repeatSelect" ng-model="election.elec">
+                            <option ng-repeat="elect in electionsList" value="[[elect._id]]">[[elect.name]]</option>
+                        </select>
+                        </br>
+                        <button type="button" class="btn btn-primary btn-lg" ng-click="election.view()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>Ver elección</button>
+                    </div>
+                    </br>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <h3 style="text-align:center"><strong>Votar</strong></h3>
+                    <img src="/img/vote.png" class="img-responsive" alt="Crear" style="height: 300px; width: 300px; display: block;">
+                    <div class="form-group" ng-init="election.load();">
+                        <h4>Esta opción le permite votar, por favor seleccione en la lista la elección en la que esta interesado(tenga a la mano su codigo de votación):</h4>
+                    </div>
+                    <div class="text-center">
+                        <select class="form-control" name="repeatSelect" id="repeatSelect" ng-model="election.elecVote">
+                            <option ng-repeat="elect in electionsList" value="[[elect._id]]">[[elect.name]]</option>
+                        </select>
+                        </br>
+                        <button type="button" class="btn btn-primary btn-lg" ng-click="election.vote()"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Votar</button>
+                    </div>
+                    </br>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+{% endblock %}
