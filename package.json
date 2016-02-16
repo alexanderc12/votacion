@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "description": "Aplicacion para el control de elecciones de personero en un colegio.",
   "author": "Alexander Castro",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "main": "server.js",
   "dependencies": {
     "express": "*",
     "mongoose": "*",
@@ -10,9 +14,5 @@
     "morgan": "*",
     "nunjucks" : "*",
     "serve-favicon": "*"
-  },
-  "scripts": {
-    "start": "node server.js"
-  },
-  "main": "server.js"
+  }
 }
