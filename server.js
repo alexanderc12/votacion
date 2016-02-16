@@ -15,9 +15,9 @@ app.set('view engine', 'html');
 app.use(favicon(path.join(__dirname, 'public', 'img', 'favicon.ico')));
 
 if(process.env.OPENSHIFT_MONGODB_DB_URL){
-  mongoose.connect(process.env.OPENSHIFT_MONGODB_DB_URL + 'votaciones');
+  mongoose.connect(process.env.OPENSHIFT_MONGODB_DB_URL + 'votacion');
 }else{
-    mongoose.connect('mongodb://127.0.0.1:27017/votaciones');
+    mongoose.connect('mongodb://127.0.0.1:27017/votacion');
 }
 
 nunjucks.configure('views', {
