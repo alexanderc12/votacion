@@ -15,9 +15,9 @@ app.set('view engine', 'html');
 app.use(favicon(path.join(__dirname, 'public', 'img', 'favicon.ico')));
 
 if(process.env.OPENSHIFT_MONGODB_DB_URL){
-  mongoose.connect(process.env.OPENSHIFT_MONGODB_DB_URL + votaciones);
+  mongoose.connect(process.env.OPENSHIFT_MONGODB_DB_URL + 'votaciones');
 }else{
-    mongoose.connect('mongodb://127.0.0.1:27017/' + votaciones);
+    mongoose.connect('mongodb://127.0.0.1:27017/votaciones');
 }
 
 nunjucks.configure('views', {
@@ -67,11 +67,11 @@ app.use(function(err, req, res) {
 });
 
 
-var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
 var server = http.createServer(app);
 
 server.listen(server_port, server_ip_address, function() {
-    console.log( "Listening on " + server_ip_address + ", server_port " + port );
+    console.log( "Listening on " + server_ip_address + ", server_port " + server_port );
 });
