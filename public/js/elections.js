@@ -21,7 +21,6 @@ function ElectionsController($http, $window, $scope) {
     this.code = '';
 
     this.addCandidate = function() {
-        console.log('aaaaaaaa');
         this.candidateList.push({
             name: this.candidateName,
             lastName: this.candidateLastName,
@@ -38,7 +37,7 @@ function ElectionsController($http, $window, $scope) {
         };
         $http.post('/nuevaEleccion', data)
             .then(function(res) {
-                $window.location.href = "https://votaciones-alexanderc121.c9users.io/";
+                $window.location.href = "http://votacion-acrapp.rhcloud.com/";
             }, function() {
                 console.log('Error 1');
             });
@@ -55,13 +54,13 @@ function ElectionsController($http, $window, $scope) {
 
     this.view = function() {
         if (this.elec != '') {
-            $window.location.href = "https://votaciones-alexanderc121.c9users.io/eleccion/?id=" + this.elec;    
+            $window.location.href = "http://votacion-acrapp.rhcloud.com/eleccion/?id=" + this.elec;
         }
     };
     
     this.vote = function() {
         if (this.elecVote != '') {
-            $window.location.href = "https://votaciones-alexanderc121.c9users.io/votar/?id=" + this.elecVote;
+            $window.location.href = "http://votacion-acrapp.rhcloud.com/votar/?id=" + this.elecVote;
         }
     };
 }
