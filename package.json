@@ -1,10 +1,10 @@
-"scripts": {
-  "start": "node server.js"
-},
 {
   "name": "Votaciones",
   "version": "0.0.1",
   "description": "Aplicacion para el control de elecciones de personero en un colegio.",
+  "scripts": {
+    "start": "node server.js"
+  },
   "main": "server.js",
   "repository": "",
   "author": "Alexander Castro",
