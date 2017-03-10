@@ -5,7 +5,6 @@ app.config(function($interpolateProvider) {
     $interpolateProvider.endSymbol(']]');
 });
 
-
 function ElectionsController($http, $window, $scope) {
     this.name = '';
     this.votersNumber = 0;
@@ -26,7 +25,9 @@ function ElectionsController($http, $window, $scope) {
             lastName: this.candidateLastName,
             photo: '<img class="media-object" src="' + this.candidatePhoto + '" alt="Foto" style="height: 250px; width: 250px; display: block;">'
         });
-        console.log(this.candidateList);
+        this.candidateName = '';
+        this.candidateLastName = '';
+        this.candidatePhoto = '';
     };
 
     this.create = function() {
@@ -35,32 +36,30 @@ function ElectionsController($http, $window, $scope) {
             name: this.name,
             votersNumber: this.votersNumber
         };
-        $http.post('/nuevaEleccion', data)
-            .then(function(res) {
-                $window.location.href = "http://votacion-acrapp.rhcloud.com/";
-            }, function() {
-                console.log('Error 1');
-            });
+        $http.post('/nuevaEleccion', data).then(function(res) {
+            $window.location.href = '/';
+        }, function() {
+            console.log('Error 1');
+        });
     };
 
     this.load = function() {
-        $http.get('/nuevaEleccion/all')
-            .then(function(res) {
-                $scope.electionsList = res.data;
-            }, function() {
-                console.log('Error 2');
-            });
+        $http.get('/nuevaEleccion/all').then(function(res) {
+            $scope.electionsList = res.data;
+        }, function() {
+            console.log('Error 2');
+        });
     };
 
     this.view = function() {
         if (this.elec != '') {
-            $window.location.href = "http://votacion-acrapp.rhcloud.com/eleccion/?id=" + this.elec;
+            $window.location.href = "/eleccion/?id=" + this.elec;
         }
     };
     
     this.vote = function() {
         if (this.elecVote != '') {
-            $window.location.href = "http://votacion-acrapp.rhcloud.com/votar/?id=" + this.elecVote;
+            $window.location.href = "/votar/?id=" + this.elecVote;
         }
     };
 }

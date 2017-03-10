@@ -1,63 +1,66 @@
 {% extends "layout.html" %} {% block content %}
-<div class="row" ng-controller="ElectionsController as election">
-    <ul class="media-list">
-        <li>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <h3 style="text-align:center"><strong>Crear elección</strong></h3>
-                    <img src="/img/new.png" class="img-responsive" alt="Crear" style="height: 300px; width: 300px; display: block;">
-                    <h4>Esta opción le permite crear una nueva elección, para ello debe tener claros los siguientes datos:</h4>
-                    <ul>
-                        <li>Nombre</li>
-                        <li>Numero de participantes</li>
-                        <li>Información de los candidatos</li>
-                    </ul>
-                    </br>
-                    <div class="text-center">
-                        <a type="button" class="btn btn-primary btn-lg" href="/nuevaEleccion"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Crear elección</a>
-                    </div>
-                    </br>
+<div class="row is-flex" data-ng-controller="ElectionsController as election">
+    <div class="col-sm-12 col-md-4">
+            <h3 style="text-align:center"><strong>Crear elección</strong></h3>
+            <img src="/img/new.png" class="img-responsive img-icon" alt="Crear">
+            <h4>Permite crear una nueva elección, para ello debe tener claros los siguientes datos:</h4>
+            <ul>
+                <li>Nombre</li>
+                <li>Numero de participantes</li>
+                <li>Información de los candidatos</li>
+            </ul>
+            <br>
+            <div class="text-center">
+                <a type="button" class="btn btn-primary btn-lg" href="/nuevaEleccion"><span
+                        class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Crear elección</a>
+            </div>
+            <br>
+    </div>
+
+    <div class="col-sm-12 col-md-4">
+            <h3 style="text-align:center"><strong>Configurar</strong></h3>
+            <img src="/img/config.png" class="img-responsive img-icon" alt="Configurar">
+            <div class="form-group" ng-init="election.load();">
+                <h4>Permite ver los detalles de una elección en curso, por favor seleccione en la lista la elección
+                    en la que esta interesado:</h4>
+            </div>
+            <div class="text-center">
+                <div class="alert alert-warning" role="alert" ng-show="!electionsList.length" style="text-align: center">No has agregado ninguna elección :(</div>
+                <div ng-show="electionsList.length">
+                    <select class="form-control" name="repeatSelect" id="electionDetailsSelect"
+                            ng-model="election.elec">
+                        <option data-ng-repeat="elect in electionsList" value="[[elect._id]]">[[elect.name]]</option>
+                    </select>
+                    <br>
+                    <button type="button" class="btn btn-primary btn-lg" data-ng-click="election.view()"><span
+                            class="glyphicon glyphicon-search" aria-hidden="true"></span>Ver elección
+                    </button>
                 </div>
             </div>
-        </li>
-        <li>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <h3 style="text-align:center"><strong>Configurar</strong></h3>
-                    <img src="/img/config.png" class="img-responsive" alt="Crear" style="height: 300px; width: 300px; display: block;">
-                    <div class="form-group" ng-init="election.load();">
-                        <h4>Esta opción le permite ver los detalles de una elección en curso, por favor seleccione en la lista la elección en la que esta interesado:</h4>
-                    </div>
-                    <div class="text-center">
-                        <select class="form-control" name="repeatSelect" id="repeatSelect" ng-model="election.elec">
-                            <option ng-repeat="elect in electionsList" value="[[elect._id]]">[[elect.name]]</option>
-                        </select>
-                        </br>
-                        <button type="button" class="btn btn-primary btn-lg" ng-click="election.view()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>Ver elección</button>
-                    </div>
-                    </br>
+            <br>
+    </div>
+
+    <div class="col-sm-12 col-md-4">
+            <h3 style="text-align:center"><strong>Votar</strong></h3>
+            <img src="/img/vote.png" class="img-responsive img-icon" alt="Votar">
+            <div class="form-group" data-ng-init="election.load();">
+                <h4>Permite votar, por favor seleccione en la lista la elección en la que esta interesado(tenga a la
+                    mano su codigo de votación):</h4>
+            </div>
+            <div class="text-center">
+                <div class="alert alert-warning" role="alert" ng-show="!electionsList.length" style="text-align: center">No has agregado ninguna elección :(</div>
+                <div ng-show="electionsList.length">
+                    <select class="form-control" name="repeatSelect" id="electionVoteSelect"
+                            data-ng-model="election.elecVote">
+                        <option data-ng-repeat="elect in electionsList" value="[[elect._id]]">[[elect.name]]</option>
+                    </select>
+                    <br>
+                    <button type="button" class="btn btn-primary btn-lg" data-ng-click="election.vote()"><span
+                            class="glyphicon glyphicon-user" aria-hidden="true"></span>Votar
+                    </button>
                 </div>
             </div>
-        </li>
-        <li>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <h3 style="text-align:center"><strong>Votar</strong></h3>
-                    <img src="/img/vote.png" class="img-responsive" alt="Crear" style="height: 300px; width: 300px; display: block;">
-                    <div class="form-group" ng-init="election.load();">
-                        <h4>Esta opción le permite votar, por favor seleccione en la lista la elección en la que esta interesado(tenga a la mano su codigo de votación):</h4>
-                    </div>
-                    <div class="text-center">
-                        <select class="form-control" name="repeatSelect" id="repeatSelect" ng-model="election.elecVote">
-                            <option ng-repeat="elect in electionsList" value="[[elect._id]]">[[elect.name]]</option>
-                        </select>
-                        </br>
-                        <button type="button" class="btn btn-primary btn-lg" ng-click="election.vote()"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Votar</button>
-                    </div>
-                    </br>
-                </div>
-            </div>
-        </li>
-    </ul>
+            <br>
+    </div>
 </div>
 {% endblock %}

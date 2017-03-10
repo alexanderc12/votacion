@@ -1,38 +1,41 @@
 {% extends "layout.html" %} {% block content %}
-<div class="row" ng-controller="ElectionsController as election">
+<div class="row" data-ng-controller="ElectionsController as election">
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <h4 class="panel-title">Crear elección:</h4></div>
+            <h4 class="panel-title">Crear elección:</h4>
+        </div>
         <div class="panel-body">
             <h4>Ingrese los siguientes datos para crear una elección:</h4>
-            <form class="form-horizontal">
+            <form class="form-horizontal" novalidate>
                 <div class="form-group">
                     <label for="name" class="col-sm-2 control-label">Nombre de la elección:</label>
-                    <div class="col-sm-10">
-                        <input id="name" type="text" class="form-control" placeholder="Nombre" ng-model="election.name">
+                    <div class="col-md-10">
+                        <input id="name" type="text" class="form-control" placeholder="Nombre" ng-model="election.name"
+                               required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="votersNumber" class="col-sm-2 control-label">Numero de votantes:</label>
-                    <div class="col-sm-10">
-                        <input id="votersNumber" type="number" class="form-control" placeholder="Numero votantes" ng-model="election.votersNumber">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">Nuevo canditado:</label>
-                    <div class="form-inline col-sm-10">
-                        <label for="candidateName">Nombres:</label>
-                        <input type="text" class="form-control" id="candidateName" placeholder="Nombres" ng-model="election.candidateName">
-                        <label for="candidateLastName">Apellidos:</label>
-                        <input type="text" class="form-control" id="candidateLastName" placeholder="Apellidos" ng-model="election.candidateLastName">
-                        <label for="candidatePhoto">Enlace de la foto:</label>
-                        <input type="text" class="form-control" id="candidatePhoto" placeholder="Enlace foto" ng-model="election.candidatePhoto">
-                        <button type="submit" class="btn btn-default" ng-click="election.addCandidate()">Agregar</button>
+                    <div class="col-md-10">
+                        <input id="votersNumber" type="number" class="form-control" placeholder="Numero votantes"
+                               ng-model="election.votersNumber" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Lista de candidatos:</label>
                     <div class="col-sm-10">
+                        <div class="row" style="padding-bottom: 10px">
+                            <div class="col-md-2"> <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+                                Nuevo candidato
+                            </button></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="alert alert-warning" role="alert" ng-show="!election.candidateList.length"
+                                     style="text-align: center">No has agregado ningun candidato :(
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <ul class="media-list" ng-repeat="candidate in election.candidateList">
                                 <li>
@@ -40,7 +43,8 @@
                                         <div class="thumbnail">
                                             <div ng-bind-html="candidate.photo | unsafe"></div>
                                             <div class="caption">
-                                                <h3><span ng-bind="candidate.name"></span> <span ng-bind="candidate.lastName"></span></h3>
+                                                <h3><span ng-bind="candidate.name"></span> <span
+                                                        ng-bind="candidate.lastName"></span></h3>
                                             </div>
                                         </div>
                                     </div>
@@ -50,12 +54,14 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" ng-click="election.create()" class="btn btn-primary">Crear eleccion</button>
+                    <div class="col-md-offset-3 col-md-6">
+                        <button type="submit" data-ng-click="election.create()" class="btn btn-primary btn-block">Crear eleccion
+                        </button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
+    {% include "dialogCandidate.html" %}
 </div>
 {% endblock %}

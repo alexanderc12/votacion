@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var nunjucks = require('nunjucks');
-var favicon = require('serve-favicon');;
+var favicon = require('serve-favicon');
 
 var app = express();
 

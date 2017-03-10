@@ -36,9 +36,9 @@ router.post('/', function(req, res) {
                     console.log(err);
                 }
             });
-        };
-        res.send('ok');
+        }
     });
+    res.send('ok')
 });
 
 function makeid() {
