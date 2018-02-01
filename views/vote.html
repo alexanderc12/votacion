@@ -17,7 +17,7 @@
                                     {{candidate.photo | safe }}
                                     <div class="caption">
                                         <h3> {{candidate.name}} {{candidate.lastName}}</h3>
-                                        <a type="button" class="btn btn-primary btn-lg btn-block" ng-href="https://votaciones-alexanderc121.c9users.io/votar/registrar/?candidato={{candidate._id}}&eleccion={{elect._id}}&code=[[election.code]]">Votar</a>
+                                        <a type="button" class="btn btn-primary btn-lg btn-block" ng-href="/votar/registrar/?candidato={{candidate._id}}&eleccion={{elect._id}}&code=[[election.code]]">Votar</a>
                                     </div>
                                 </div>
                             </div>

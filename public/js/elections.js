@@ -23,11 +23,13 @@ function ElectionsController($http, $window, $scope) {
         this.candidateList.push({
             name: this.candidateName,
             lastName: this.candidateLastName,
-            photo: '<img class="media-object" src="' + this.candidatePhoto + '" alt="Foto" style="height: 250px; width: 250px; display: block;">'
+            photo: '<img class="media-object" src="' + this.candidatePhoto + '" alt="Foto" style="height: 250px;' +
+            ' width: 250px; display: block;">'
         });
         this.candidateName = '';
         this.candidateLastName = '';
         this.candidatePhoto = '';
+        angular.element('#myModal').modal('hide');
     };
 
     this.create = function() {

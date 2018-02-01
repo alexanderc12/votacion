@@ -6,6 +6,7 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var nunjucks = require('nunjucks');
 var favicon = require('serve-favicon');
+var config = require('./config');
 
 var app = express();
 
@@ -14,15 +15,7 @@ app.use(express.static(path.resolve(__dirname, 'public')));
 app.set('view engine', 'html');
 app.use(favicon(path.join(__dirname, 'public', 'img', 'favicon.ico')));
 
-if(process.env.OPENSHIFT_MONGODB_DB_URL){
-    mongoose.connect(process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
-        process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
-        process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
-        process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
-        process.env.OPENSHIFT_APP_NAME);
-}else{
-    mongoose.connect('mongodb://127.0.0.1:27017/votacion');
-}
+mongoose.connect(config.mongo.url);
 
 nunjucks.configure('views', {
     autoescape: true,
@@ -71,8 +64,8 @@ app.use(function(err, req, res) {
 });
 
 
-var server_port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
-var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+var server_port = 3000;
+var server_ip_address = '127.0.0.1';
 
 var server = http.createServer(app);
 
