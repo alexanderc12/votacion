@@ -69,11 +69,10 @@ app.use(function(err, req, res) {
 });
 
 
-var server_port = 3000;
-var server_ip_address = '127.0.0.1';
+app.set('port', (process.env.PORT || 3000));
 
 var server = http.createServer(app);
 
-server.listen(server_port, server_ip_address, function() {
-    console.log( "Listening on " + server_ip_address + ", server_port " + server_port );
+server.listen(app.get('port'), function() {
+    console.log( "Listening on " + ", server_port " + app.get('port') );
 });
