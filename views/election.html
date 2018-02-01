@@ -43,10 +43,22 @@
                     </thead>
                     <tbody>
                         {% for person in persons %}
+                        {% if person.state == false %}
                         <tr>
                             <td>{{person.code}}</td>
-                            <td>{% if person.state %} <span class="label label-warning">Usado</span> {% else %} <span class="label label-success">Activo</span> {% endif %}</td>
+                            <td> <span class="label label-success">Activo</span>
+                            </td>
                         </tr>
+                        {% endif %}
+                        {% endfor %}
+                        {% for person in persons %}
+                            {% if person.state %}
+                            <tr>
+                                <td>{{person.code}}</td>
+                                <td> <span class="label label-warning">Usado</span>
+                                </td>
+                            </tr>
+                            {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>
@@ -73,10 +85,13 @@
                             <td>{{result.name}}</td>
                             <td>
                                 <div class="progress">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow={{result.votes}} aria-valuemin="0" aria-valuemax="{{elect.votersNumber}}" style="min-width: 4em;width:{{(100*result.votes)/elect.votersNumber}}%;">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow={{result.votes}}
+                                         aria-valuemin="0" aria-valuemax="{{elect.votersNumber}}"
+                                         style="min-width: 4em; width:{{(100*result.votes)/elect.votersNumber}}%;">
                                         {{result.votes}} de {{elect.votersNumber}}
                                     </div>
-                                </div></td>
+                                </div>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>

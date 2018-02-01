@@ -2,6 +2,15 @@ var express = require('express');
 var router = express.Router();
 var Election = require('../models/election');
 var Person = require('../models/person');
+var fs = require("fs");
+var config = require('../config');
+var cloudinary = require('cloudinary');
+cloudinary.config({
+    cloud_name: config.cloudinary.name,
+    api_key: config.cloudinary.key,
+    api_secret: config.cloudinary.secret
+});
+
 
 router.get('/', function(req, res) {
     res.render('newElection.html');
@@ -15,6 +24,32 @@ router.get('/all', function(req, res) {
         res.json(elections);
     });
 });
+
+router.post('/photo', function(req, res)  {
+    var name = req.body.photo.substring("data:image/".length, req.body.photo.indexOf(";base64"));
+    var base64Data = req.body.photo.replace(/^data:image\/\w+;base64,/, '', "");
+    fs.writeFile("./uploads/out." + name, base64Data, 'base64', function(err) {
+        if(err){
+            console.log(err);
+            res.send(err);
+        }else {
+            cloudinary.v2.uploader.upload("./uploads/out." + name,
+                function(error, result) {
+                    console.log(error);
+                    if(error){
+                        console.log(err);
+                        res.send(error);
+                    }else{
+                        res.send(result.url);
+                    }
+                });
+
+        }
+    });
+
+});
+
+
 
 router.post('/', function(req, res) {
     var election = new Election({
@@ -38,7 +73,7 @@ router.post('/', function(req, res) {
             });
         }
     });
-    res.send('ok')
+    res.send('ok');
 });
 
 function makeid() {

@@ -13,6 +13,8 @@
     "body-parser": "*",
     "morgan": "*",
     "nunjucks" : "*",
-    "serve-favicon": "*"
+    "serve-favicon": "*",
+    "cloudinary": "*",
+    "express-fileupload": "*"
   }
 }

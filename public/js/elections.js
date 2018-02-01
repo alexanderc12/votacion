@@ -11,7 +11,6 @@ function ElectionsController($http, $window, $scope) {
     this.candidateList = [];
     this.candidateName = '';
     this.candidateLastName = '';
-    this.candidatePhoto = '';
 
     this.elec = '';
     this.elecVote = '';
@@ -20,16 +19,34 @@ function ElectionsController($http, $window, $scope) {
     this.code = '';
 
     this.addCandidate = function() {
-        this.candidateList.push({
-            name: this.candidateName,
-            lastName: this.candidateLastName,
-            photo: '<img class="media-object" src="' + this.candidatePhoto + '" alt="Foto" style="height: 250px;' +
-            ' width: 250px; display: block;">'
+        var form = new FormData();
+        form.append('photo',  $scope.imageSrc);
+        $http.post('/nuevaEleccion/photo', form, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        }).then(function(res) {
+            this.candidateList.push({
+                name: this.candidateName,
+                lastName: this.candidateLastName,
+                photo: '<img class="media-object" src="' + res.data + '" alt="Foto" style="height: 250px;' +
+                ' width: 250px; display: block;">'
+            });
+            angular.element('#myModal').modal('hide');
+        }.bind(this), function() {
+            console.log('Error 1');
         });
+    };
+
+    this.openDialogNewCandidate = function () {
+        this.cleanDialogNewCandidate();
+        angular.element('#myModal').modal('show');
+    }
+
+    this.cleanDialogNewCandidate = function () {
         this.candidateName = '';
         this.candidateLastName = '';
-        this.candidatePhoto = '';
-        angular.element('#myModal').modal('hide');
+        document.getElementById("file").value = null;
+        $scope.imageSrc = '';
     };
 
     this.create = function() {
@@ -41,7 +58,7 @@ function ElectionsController($http, $window, $scope) {
         $http.post('/nuevaEleccion', data).then(function(res) {
             $window.location.href = '/';
         }, function() {
-            console.log('Error 1');
+            console.log('Error al crear eleccion.');
         });
     };
 
@@ -63,6 +80,15 @@ function ElectionsController($http, $window, $scope) {
         if (this.elecVote != '') {
             $window.location.href = "/votar/?id=" + this.elecVote;
         }
+    };
+
+    this.loadFile = function (files) {
+        var reader = new FileReader();
+        reader.addEventListener("load", function () {
+            $scope.imageSrc = reader.result;
+            $scope.$apply();
+        }, false);
+        reader.readAsDataURL(files[0]);
     };
 }
 

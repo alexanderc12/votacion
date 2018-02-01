@@ -7,8 +7,11 @@ var bodyParser = require('body-parser');
 var nunjucks = require('nunjucks');
 var favicon = require('serve-favicon');
 var config = require('./config');
+const fileUpload = require('express-fileupload');
 
 var app = express();
+
+app.use(fileUpload());
 
 app.use(logger('dev'));
 app.use(express.static(path.resolve(__dirname, 'public')));
@@ -24,9 +27,11 @@ nunjucks.configure('views', {
     noCache: true
 });
 
+
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-    extended: false
+    extended: true
 }));
 
 var indexController = require('./controllers/indexController');
